@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Swifts</title>
+</head>
+<body bgcolor="#F5F4EF">
+
+	<div id="login">
+		<input id="loginButton" type="button" value="Login" />
+	</div>
+
+	<form action="javascript:void(0);">
+		<h2>List Swifts</h2>
+		<div>
+			<input id="listSwift" type="submit" value="List Swifts">
+		</div>
+	</form>
+	<div id="listSwiftsResult" style="background: black; color: silver;"></div>
+
+
+	<form action="javascript:void(0);">
+		<h2>List A Swift</h2>
+		<div>
+			<input id="SwiftID" placeholder="Swift ID value"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="listASwift" type="submit" value="List A Swift">
+		</div>
+	</form>
+	<div id="listASwiftResult" style="background: black; color: silver;"></div>
+
+
+	<form action="javascript:void(0);">
+		<h2>Insert New Swift</h2>
+		<div>
+			<input id="Id" placeholder="Swift id here"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="Cname" placeholder="Common Name here"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="Genus" placeholder="Swift genus here"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="Species" placeholder="Swift species here"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="insertSwift" type="submit" value="Insert Swift">
+		</div>
+	</form>
+		<div id="insertASwiftResult" style="background: black; color: silver;"></div>
+
+	<form action="javascript:void(0);">
+		<h2>Update Swift</h2>
+		<div>
+			<input id="editSwiftID" placeholder="Swift ID value"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="editSwiftCname" placeholder="Common Name value"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="editSwiftGenus" placeholder="Swift genus value"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="editSwiftSpecies" placeholder="Swift species value"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="updateSwift" type="submit" value="Update Swift">
+		</div>
+	</form>
+
+
+	<form action="javascript:void(0);">
+		<h2>Delete Swift</h2>
+		<div>
+			<input id="SwiftID_del" placeholder="Swift ID value"
+				style="background: black; color: silver;"></input>
+		</div>
+		<div>
+			<input id="deleteSwift" type="submit" value="Delete Swift">
+		</div>
+	</form>
+
+	<!-- FUNCTIONS -->
+
+	<script type="text/javascript">
+		var scopes = 'https://www.googleapis.com/auth/userinfo.email';
+		var client_id = '138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com';
+
+		function handleAuth() {
+			var request = gapi.client.oauth2.userinfo
+					.get()
+					.execute(
+							function(resp) {
+								if (!resp.code) {
+									// User is signed in, so hide the button
+									document.getElementById('loginButton').style.visibility = 'hidden';
+									document.getElementById('login').innerText = 'Welcome '
+											+ resp.name;
+								} else {
+									document.getElementById('loginButton').style.visibility = '';
+								}
+							});
+		}
+
+		function signin(mode, callback) {
+			gapi.auth.authorize({
+				client_id : client_id,
+				scope : scopes,
+				immediate : mode
+			}, callback);
+		}
+
+		function init() {
+
+			//Parameters are APIName,APIVersion,CallBack function,API Root 
+			//			gapi.client.load('swiftendpoint', 'v1', null,
+			//				'http://localhost:8888/_ah/api');
+
+			var apisToLoad;
+			var callback = function() {
+				if (--apisToLoad == 0) {
+					signin(true, handleAuth);
+				}
+			}
+
+			apisToLoad = 2;
+			//Parameters are APIName,APIVersion,CallBack function,API Root 
+
+			//Test locally
+			gapi.client.load('swiftendpoint', 'v1', callback,
+					'http://localhost:8888/_ah/api');
+
+			//test on App Engine
+			//        	gapi.client.load('swiftendpoint', 'v1', callback, 'https://swift-taxonomy.appspot.com/_ah/api');
+
+			gapi.client.load('oauth2', 'v2', callback);
+
+			document.getElementById('listSwift').onclick = function() {
+				listSwifts();
+			}
+
+			document.getElementById('listASwift').onclick = function() {
+				listASwift();
+			}
+
+			document.getElementById('insertSwift').onclick = function() {
+				insertSwift();
+			}
+
+			document.getElementById('updateSwift').onclick = function() {
+				updateSwift();
+			}
+
+			document.getElementById('deleteSwift').onclick = function() {
+				deleteSwift();
+			}
+
+			document.getElementById('loginButton').onclick = function() {
+				signin(false, handleAuth);
+			}
+		}
+
+		//List Swifts function that will execute the listSwift call
+		function listSwifts() {
+			//Build the Request Object
+			var requestData = {};
+			console.log(requestData);
+
+			gapi.client.swiftendpoint
+					.listSwift()
+					.execute(
+							function(resp) {
+
+								if (!resp.code) {
+									resp.items = resp.items || [];
+									console.log('listSwifts():' + resp.items);
+
+									var result = "";
+									for ( var i = 0; i < resp.items.length; i++) {
+										result = result + "["
+												+ resp.items[i].id + "]"
+												+ resp.items[i].cname
+												+ "&nbsp;" + "(" + "<i>"
+												+ resp.items[i].genus
+												+ "&nbsp;"
+												+ resp.items[i].species
+												+ "</i>" + ")" + "<br/>";
+									}
+									document.getElementById('listSwiftsResult').innerHTML = result;
+								}
+							});
+		}
+
+		//Get Swift function
+		function listASwift() {
+			//Validate the entries
+			var _ID = document.getElementById('SwiftID').value;
+			console.log('listASwift():' + _ID);
+			//Build the Request Object
+			var requestData = {};
+			requestData.id = _ID;
+			console.log(requestData);
+			var result = "";
+			gapi.client.swiftendpoint
+					.getSwift(requestData)
+					.execute(
+							function(resp) {
+								console.log("resp.code:"+resp.code);
+								if (!resp.code) {
+									result = result + "[" + resp.id + "]"
+											+ "&nbsp;" + resp.cname + "&nbsp;"
+											+ "(" + "<i>" + resp.genus
+											+ "&nbsp;" + resp.species + "</i>"
+											+ ")";
+								} else {
+									result = " 404 Not Found"
+								}
+								document.getElementById('listASwiftResult').innerHTML = result;
+							});
+		}
+
+		//Insert Swift function
+		function insertSwift() {
+			//Validate the entries
+			var _Id = document.getElementById('Id').value;
+			var _Cname = document.getElementById('Cname').value;
+			var _Genus = document.getElementById('Genus').value;
+			var _Species = document.getElementById('Species').value;
+
+			//Build the Request Object
+			var requestData = {};
+			requestData.id = _Id;
+			requestData.cname = _Cname;
+			requestData.genus = _Genus;
+			requestData.species = _Species;
+			var result = "";
+			gapi.client.swiftendpoint.insertSwift(requestData).execute(
+					function(resp) {
+						if (!resp.code) {
+							//Just logging to console now, you can do your check here/display message
+							console.log("resp.code:"+resp.code);
+							console.log(resp.id + "," + resp.cname + ","
+									+ resp.genus + "," + resp.species);
+							result = result + "[" + resp.id + "]"
+							+ "&nbsp;" + resp.cname + "&nbsp;"
+							+ "(" + "<i>" + resp.genus
+							+ "&nbsp;" + resp.species + "</i>"
+							+ ")";
+						} else {
+							result = " ERROR! Object already exists"
+						}
+						document.getElementById('insertASwiftResult').innerHTML = result;
+					});
+		}
+
+		//Update Swift function
+		function updateSwift() {
+			//Validate the entries
+			var _Id = document.getElementById("editSwiftID").value;
+			var _Cname = document.getElementById('editSwiftCname').value;
+			var _Genus = document.getElementById('editSwiftGenus').value;
+			var _Species = document.getElementById('editSwiftSpecies').value;
+
+			//Build the Request Object
+			var requestData = {};
+			requestData.id = _Id;
+			requestData.cname = _Cname;
+			requestData.genus = _Genus;
+			requestData.species = _Species;
+			gapi.client.swiftendpoint.updateSwift(requestData).execute(
+					function(resp) {
+						if (!resp.code) {
+							//Just logging to console now, you can do your check here/display message
+							console.log(resp.id + "," + resp.cname + ","
+									+ resp.genus + "," + resp.species);
+						}
+					});
+		}
+
+		//Delete Swift function
+		function deleteSwift() {
+			//Validate the entries
+			var _ID = document.getElementById('SwiftID_del').value;
+
+			//Build the Request Object
+			var requestData = {};
+			requestData.id = _ID;
+			console.log(requestData);
+			gapi.client.swiftendpoint.removeSwift(requestData).execute(
+					function(resp) {
+						if (!resp.code) {
+						//Just logging to console now, you can do your check here/display message
+						console.log(resp.id + "," + resp.cname + ","
+								+ resp.genus + "," + resp.species + " has been deleted.");
+						}
+					});
+					
+		}
+	</script>
+	<script src="https://apis.google.com/js/client.js?onload=init"></script>
+</body>
+</html>

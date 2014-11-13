@@ -1,0 +1,62 @@
+generated public key for SSH2 & git:
+
+ssh-dss AAAAB3NzaC1kc3MAAACBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAAAAFQCXYFCPFSMLzLKSuYKi64QL8Fgc9QAAAIEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoAAACAXC8ZqhSrBygc0ADj8kMAG1t90LetWus6ca+v9A/c8y6iWEgP+JeifBeRwxtCkjqFwNN+219xJXi9BOKSrHOtgXmoIRjCeGJHjPUmTlHk7FEOzCuQUyEV5pIU9Liq0kPGU/TY1nSOvhQGsTiv1nBvUdE4O4LpiGI71VIZLLsQJvg= DSA-1024
+
+
+
+
+
+11.) I got tripped up over this:
+
+Was seeing the instance out on the GAE and not my local instance so I was all confused.
+
+In index.html I added these lines:
+
+line 140:
+
+			//Test locally
+			gapi.client.load('swiftendpoint', 'v1', callback,
+					'http://localhost:8888/_ah/api');
+
+			//test on App Engine
+			//        	gapi.client.load('swiftendpoint', 'v1', callback, 'https://swift-taxonomy.appspot.com/_ah/api');
+
+After this things made more sense and I could effectively debug the local one.
+=======================================================================================================================
+
+
+2.)Couldn't get this to work:
+
+	@ApiMethod(name = "getSwift")
+	public Swift getSwift(@Named("id") Long id) {
+		System.out.println("getSwift(@Named(\"id\"):"+id);
+		PersistenceManager mgr = getPersistenceManager();
+		Swift swift = null;
+		try {
+			swift = mgr.getObjectById(Swift.class, id);
+		} finally {
+			mgr.close();
+		}
+		System.out.println("Found swift with id "+ swift.getId());
+		return swift;
+	}
+	
+	
+	Got this crap at the js console:
+	
+	[undefined]
+	
+	Shit.
+	
+	So I looked at the insert and update methods and noticed that they both passed in a Swift param. When I rewrote the 
+	getSwift() it worked...
+	
+		public Swift getSwift(Swift swift, @Named("id") Long id) {
+	
+	
+	
+	
+	
+	
+	
+	

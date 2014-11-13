@@ -1,0 +1,221 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://swift-taxonomy.appspot.com/_ah/api",
+  "name" : "swiftendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://swift-taxonomy.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "wjihle.org",
+  "ownerName" : "wjihle.org",
+  "packagePath" : "swifts.entity",
+  "methods" : {
+    "swiftendpoint.removeSwift" : {
+      "path" : "swift/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "org.wjihle.swifts.entity.SwiftEndpoint.removeSwift",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "swiftendpoint.updateSwift" : {
+      "path" : "swift",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "org.wjihle.swifts.entity.SwiftEndpoint.updateSwift",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "swiftendpoint.insertSwift" : {
+      "path" : "swift",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com" ],
+      "clientIds" : [ "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com", "replace this with your Android client ID", "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "org.wjihle.swifts.entity.SwiftEndpoint.insertSwift",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "swiftendpoint.getSwift" : {
+      "path" : "swift/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "org.wjihle.swifts.entity.SwiftEndpoint.getSwift",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "swiftendpoint.listSwift" : {
+      "path" : "swift",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "org.wjihle.swifts.entity.SwiftEndpoint.listSwift",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "Swift" : {
+        "id" : "Swift",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "kingdom" : {
+            "type" : "string"
+          },
+          "phylum" : {
+            "type" : "string"
+          },
+          "taxonclass" : {
+            "type" : "string"
+          },
+          "taxonorder" : {
+            "type" : "string"
+          },
+          "family" : {
+            "type" : "string"
+          },
+          "genus" : {
+            "type" : "string"
+          },
+          "species" : {
+            "type" : "string"
+          },
+          "cname" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CollectionResponse_Swift" : {
+        "id" : "CollectionResponse_Swift",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Swift"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "org.wjihle.swifts.entity.SwiftEndpoint.removeSwift" : {
+        "request" : {
+          "$ref" : "Swift"
+        }
+      },
+      "org.wjihle.swifts.entity.SwiftEndpoint.updateSwift" : {
+        "request" : {
+          "$ref" : "Swift"
+        },
+        "response" : {
+          "$ref" : "Swift"
+        }
+      },
+      "org.wjihle.swifts.entity.SwiftEndpoint.insertSwift" : {
+        "request" : {
+          "$ref" : "Swift"
+        },
+        "response" : {
+          "$ref" : "Swift"
+        }
+      },
+      "org.wjihle.swifts.entity.SwiftEndpoint.getSwift" : {
+        "request" : {
+          "$ref" : "Swift"
+        },
+        "response" : {
+          "$ref" : "Swift"
+        }
+      },
+      "org.wjihle.swifts.entity.SwiftEndpoint.listSwift" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Swift"
+        }
+      }
+    }
+  }
+}
