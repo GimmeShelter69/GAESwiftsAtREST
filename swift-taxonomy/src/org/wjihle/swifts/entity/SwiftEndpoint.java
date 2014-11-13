@@ -20,11 +20,15 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.users.User;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
-//import com.google.api.server.spi.auth.common.User;
-
 @Api(name = "swiftendpoint", namespace = @ApiNamespace(ownerDomain = "wjihle.org", ownerName = "wjihle.org", packagePath = "swifts.entity"))
 public class SwiftEndpoint {
 
+	
+	/*
+	 * Author: Bill Ihle
+	 */
+	
+	
 	/**
 	 * This method lists all the entities inserted in datastore. It uses HTTP
 	 * GET method and paging support.
