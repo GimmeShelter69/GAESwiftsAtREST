@@ -89,6 +89,10 @@ public class SwiftEndpoint {
 	 */
 	@ApiMethod(name = "getSwift")
 	public Swift getSwift(Swift swift, @Named("id") Long id) {
+		if(id == null){
+			System.out.println("getSwift(@Named(\"id\"):" + id);
+			return null;
+		}
 		System.out.println("getSwift(@Named(\"id\"):" + id);
 		PersistenceManager mgr = getPersistenceManager();
 		try {
