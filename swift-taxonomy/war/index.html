@@ -137,13 +137,15 @@
 			apisToLoad = 2;
 			//Parameters are APIName,APIVersion,CallBack function,API Root 
 
-			//Test locally
-			gapi.client.load('swiftendpoint', 'v1', callback,
-					'http://localhost:8888/_ah/api');
-
 			//test on App Engine
-			//        	gapi.client.load('swiftendpoint', 'v1', callback, 'https://swift-taxonomy.appspot.com/_ah/api');
+//			        	gapi.client.load('swiftendpoint', 'v1', callback,
+//			        'https://swift-taxonomy.appspot.com/_ah/api');
+			
+						//Test locally
+						gapi.client.load('swiftendpoint', 'v1', callback,
+								'http://localhost:8888/_ah/api');
 
+			
 			gapi.client.load('oauth2', 'v2', callback);
 
 			document.getElementById('listSwift').onclick = function() {
@@ -247,7 +249,7 @@
 			var result = "";
 			gapi.client.swiftendpoint.insertSwift(requestData).execute(
 					function(resp) {
-						if (!resp.code) {
+/* 						if (!resp.code) {
 							//Just logging to console now, you can do your check here/display message
 							console.log("resp.code:"+resp.code);
 							console.log(resp.id + "," + resp.cname + ","
@@ -259,8 +261,29 @@
 							+ ")";
 						} else {
 							result = " ERROR! Object already exists"
+						    alert("Error : " + resp.code + ":" + resp.id);
 						}
-						document.getElementById('insertASwiftResult').innerHTML = result;
+ */				
+ 
+	if (resp.code == 401) {
+//		result = " ERROR! Object already exists"
+		alert("Error : " + resp.code + ":" + "User is not valid");
+
+	} else {
+		
+		
+		console.log("resp.code:"+resp.code);
+		console.log(resp.id + "," + resp.cname + ","
+				+ resp.genus + "," + resp.species);
+		result = result + "[" + resp.id + "]"
+		+ "&nbsp;" + resp.cname + "&nbsp;"
+		+ "(" + "<i>" + resp.genus
+		+ "&nbsp;" + resp.species + "</i>"
+		+ ")";
+		
+	}
+
+ document.getElementById('insertASwiftResult').innerHTML = result;
 					});
 		}
 

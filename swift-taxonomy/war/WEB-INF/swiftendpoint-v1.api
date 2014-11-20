@@ -71,7 +71,7 @@
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com" ],
-      "clientIds" : [ "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com", "replace this with your Android client ID", "292824132082.apps.googleusercontent.com" ],
+      "clientIds" : [ "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com", "138320903183-nhivdb537i550jsotek8u0nqpqa06cp2.apps.googleusercontent.com", "292824132082.apps.googleusercontent.com" ],
       "rosyMethod" : "org.wjihle.swifts.entity.SwiftEndpoint.insertSwift",
       "request" : {
         "body" : "autoTemplate(backendRequest)",

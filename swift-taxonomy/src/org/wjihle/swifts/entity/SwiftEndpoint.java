@@ -119,16 +119,18 @@ public class SwiftEndpoint {
 	@ApiMethod(name = "insertSwift", scopes = { Constants.EMAIL_SCOPE }, clientIds = {
 			Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID,
 			com.google.api.server.spi.Constant.API_EXPLORER_CLIENT_ID }, audiences = { Constants.ANDROID_AUDIENCE })
-	public Swift insertSwift(Swift swift, User user) {
+	public Swift insertSwift(Swift swift, User user) throws UnauthorizedException {
+		if (user == null) throw new UnauthorizedException("User is Not Valid");
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (user == null) 
-				throw new UnauthorizedException("User is Not Valid");
+//			if (user == null) 
+//				throw new UnauthorizedException("User is Not Valid");
 			if (containsSwift(swift)) 
 				throw new EntityExistsException("Object already exists");
 			mgr.makePersistent(swift);
-		} catch (UnauthorizedException ue) {
-			System.out.println("ERROR:" + ue.getMessage());
+//		} 
+//		catch (UnauthorizedException ue) {
+//			System.out.println("ERROR:" + ue.getMessage());
 		} catch (EntityExistsException e) {
 			System.out.println("ERROR:" + e.getMessage());
 		} finally {
