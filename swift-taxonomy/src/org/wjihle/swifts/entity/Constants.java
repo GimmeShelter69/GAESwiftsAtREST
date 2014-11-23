@@ -5,7 +5,8 @@ package org.wjihle.swifts.entity;
  */
 public class Constants {
   public static final String WEB_CLIENT_ID = "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com";
-  public static final String ANDROID_CLIENT_ID = "138320903183-nhivdb537i550jsotek8u0nqpqa06cp2.apps.googleusercontent.com";
+//  public static final String ANDROID_CLIENT_ID = "138320903183-nhivdb537i550jsotek8u0nqpqa06cp2.apps.googleusercontent.com";
+  public static final String ANDROID_CLIENT_ID = "138320903183-9takb1bf6kk96q2m369biav8484c546a.apps.googleusercontent.com";
   public static final String IOS_CLIENT_ID = "replace this with your iOS client ID";
   public static final String ANDROID_AUDIENCE = WEB_CLIENT_ID;
 
